@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import connectDB from './lib/db.js'
 
 const app = express(); // create express app
+app.use(express.json()); // parse json data
 
 app.use("/api/auth",authRoutes);
 dotenv.config(); // configure dotenv to use .env file
@@ -14,3 +15,4 @@ app.listen(PORT,()=>{
     console.log('Server is running on port',+ PORT);
     connectDB(); // connect to MongoDB kn
 })
+
