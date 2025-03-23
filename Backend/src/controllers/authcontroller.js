@@ -1,6 +1,6 @@
 import connectDB from "../lib/db.js";
 import { generateToken } from "../lib/utils.js";
-import User from "../models/user.js";
+import User from "../models/usermodel.js";
 import bcrypt from "bcryptjs";
 
 
@@ -44,15 +44,44 @@ export const signup= async (req,res)=>{
     
     } catch (error) {
         console.log("Error in signup controller",error.message);
-        res.statue(500).json({message:"Server Error"});
+        res.status(500).json({message:"Server Error"});
         
     }
 }
 
-export const login=(req,res)=>{
-    res.send("login route");
+export const login= async(req,res)=>{
+    const {email,password}=req.body // get the data from the request body this comes from the frontend
+    try {
+        //check of user exist 
+        const user=await User.findOne({email});
+        if(!user) return res.status(400).json({message:"Email does not exist"});
+        // check if password is correct
+        const isMatch=await bcrypt.compare(password,user.password)
+        if(!isMatch) return res.status(400).jason({message:"Invalid Credentials"})
+        
+        generateToken(user._id,res);
+        res.status(200).json({ // send the user data to the frontend
+            _id:user._id,
+            fullName:user.fullName,
+            email:user.email,
+            profilePic:user.profile
+        })
+        
+    } catch (error) {
+        console.log("Error in login controller",error.message);
+        res.status(500).json({message:"Server Error"});
+        
+    }
 }
 
 export const logout=(req,res)=>{
-    res.send("logout route");
+    try {
+        res.cookie("jwt","",{maxAge:1}); // clear the cookie
+        res.status(200).json({message:"Logged Out"});
+        
+    } catch (error) {
+        console.log("Error in logout controller",error.message);
+        res.status(500).json({message:"Server Error"});
+        
+    }
 }
