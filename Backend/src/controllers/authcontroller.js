@@ -52,7 +52,7 @@ export const signup= async (req,res)=>{
 export const login= async(req,res)=>{
     const {email,password}=req.body // get the data from the request body this comes from the frontend
     try {
-        //check of user exist 
+        //check if user exist 
         const user=await User.findOne({email});
         if(!user) return res.status(400).json({message:"Email does not exist"});
         // check if password is correct
