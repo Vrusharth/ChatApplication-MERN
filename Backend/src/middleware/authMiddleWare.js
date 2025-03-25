@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/usermodel';
-import { login } from '../controllers/authcontroller';
+import User from '../models/usermodel.js';  // Use relative path
+
+
 
 export const protectRoute= async (req,res,next)=>{
     try {
