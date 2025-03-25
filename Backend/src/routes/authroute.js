@@ -1,5 +1,6 @@
 import express from "express"; // import express
 import { login, logout, signup } from "../controllers/authcontroller.js"; // import signup, login, logout from authcontroller
+import { protectRoute } from "../middleware/authMiddleWare.js";
 
 const router = express.Router(); // create express router
 // put the arrow funtion in controller for better code management
@@ -9,7 +10,7 @@ router.post("/login",login)
 
 router.post("/logout",logout)
 
-// router.put("/updateprofile",updateProfile)
+router.put("/updateprofile", protectRoute,updateProfile) // if authenticated only then update profile
 
 
 export default router; // export router
