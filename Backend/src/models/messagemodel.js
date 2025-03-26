@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const messageSchema=mongoose.Schema({
     senderID:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        type:mongoose.Schema.Types.ObjectId, // type is ObjectId
+        ref:"User", // reference to User model
         required:true
     },
     receiverID:{
