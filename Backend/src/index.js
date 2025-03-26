@@ -1,6 +1,7 @@
 // Dependencies: npm i express mongoose dotenv jsonwebtoken bcryptjs cookie-parser cloudinary socket.io
 import express from 'express';
 import authRoutes from './routes/authroute.js';
+import messageRoutes from './routes/messageroute.js'
 import dotenv from 'dotenv';
 import connectDB from './lib/db.js'
 import cookieParser from 'cookie-parser';
